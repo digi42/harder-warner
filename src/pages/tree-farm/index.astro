@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DivisionLanding from '../../components/DivisionLanding.astro';
+import { divisions } from '../../lib/nav';
+const division = divisions.find((d) => d.href === '/tree-farm')!;
+---
+<BaseLayout title={division.label} description={division.blurb}>
+  <DivisionLanding
+    division={division}
+    intro="A working tree farm with large-caliper inventory, expert transplanting, and balled-and-burlapped stock for projects of any scale."
+  />
+</BaseLayout>

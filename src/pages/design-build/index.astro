@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DivisionLanding from '../../components/DivisionLanding.astro';
+import { divisions } from '../../lib/nav';
+const division = divisions.find((d) => d.href === '/design-build')!;
+---
+<BaseLayout title={division.label} description={division.blurb}>
+  <DivisionLanding
+    division={division}
+    intro="Certified designers and crews who turn your outdoor space into patios, pergolas, retaining walls, and complete landscape transformations."
+  />
+</BaseLayout>

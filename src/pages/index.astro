@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { divisions } from '../lib/nav';
+---
+
+<BaseLayout title="Harder & Warner">
+  <section class="hero">
+    <div class="container hero__inner">
+      <p class="eyebrow">Fourth generation, since 1945</p>
+      <h1>West Michigan's landscape &amp; garden destination</h1>
+      <p class="hero__lead">
+        From a single perennial to a complete outdoor transformation — design &amp;
+        build, garden center, tree farm, and professional grounds care, all under
+        one roof in Caledonia.
+      </p>
+      <div class="hero__actions">
+        <a href="/design-build" class="btn btn--primary">Plan a project</a>
+        <a href="/garden-center" class="btn btn--outline">Visit the garden center</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Our divisions</p>
+      <h2>Four ways we help you grow</h2>
+      <div class="grid grid--2">
+        {divisions.map((d) => (
+          <a class="card division-tile" href={d.href}>
+            <h3>{d.label}</h3>
+            <p>{d.blurb}</p>
+            <span class="division-tile__more">Explore {d.label} &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tinted">
+    <div class="container cta-band">
+      <div>
+        <h2>Have a project in mind?</h2>
+        <p>Tell us what you're dreaming up and we'll match you with the right team.</p>
+      </div>
+      <a href="/contact" class="btn btn--primary">Contact us</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(160deg, var(--color-primary-dark), var(--color-primary));
+    color: var(--color-cream);
+    padding-block: var(--space-6);
+  }
+  .hero h1 { color: var(--color-white); max-width: 16ch; }
+  .hero .eyebrow { color: var(--color-accent); }
+  .hero__lead { font-size: 1.2rem; max-width: 60ch; color: var(--color-cream); }
+  .hero__actions { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4); }
+
+  .division-tile { display: block; }
+  .division-tile:hover { text-decoration: none; box-shadow: var(--shadow-md); }
+  .division-tile__more { color: var(--color-primary); font-weight: 600; }
+
+  .cta-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+</style>

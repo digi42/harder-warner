@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "harderandwarner",
+  "compatibility_date": "2025-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Cloudflare Pages target (matches @astrojs/cloudflare v12 output).
+  // Pages reads dist/_worker.js + dist/_routes.json automatically.
+  "pages_build_output_dir": "./dist",
+
+  "observability": {
+    "enabled": true
+  },
+
+  // --- D1: orders, registrations, leads, contact submissions ---
+  // Create with: wrangler d1 create harderandwarner
+  // Then paste the returned database_id below. Pages Git builds read these
+  // bindings from this file.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "harderandwarner",
+      "database_id": "REPLACE_WITH_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ]
+
+  // --- Email Sending (added once the binding is provisioned) ---
+  // "send_email": [{ "name": "EMAIL", "destination_address": "orders@harderandwarner.com" }]
+}

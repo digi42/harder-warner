@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DivisionLanding from '../../components/DivisionLanding.astro';
+import { divisions } from '../../lib/nav';
+const division = divisions.find((d) => d.href === '/garden-center')!;
+---
+<BaseLayout title={division.label} description={division.blurb}>
+  <DivisionLanding
+    division={division}
+    intro="Acres of plants, trees, and unique finds — plus bulk goods, hands-on classes, and seasonal events the whole family loves."
+  />
+</BaseLayout>

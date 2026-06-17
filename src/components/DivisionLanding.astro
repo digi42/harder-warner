@@ -1,0 +1,61 @@
+---
+import type { Division } from '../lib/nav';
+
+interface Props {
+  division: Division;
+  intro?: string;
+}
+
+const { division, intro } = Astro.props;
+---
+
+<section class="division-hero section">
+  <div class="container">
+    <p class="eyebrow">Harder &amp; Warner</p>
+    <h1>{division.label}</h1>
+    <p class="division-hero__intro">{intro ?? division.blurb}</p>
+    <a href="/contact" class="btn btn--primary">Get in touch</a>
+  </div>
+</section>
+
+<section class="section section--tinted">
+  <div class="container">
+    <h2>Explore {division.label}</h2>
+    <div class="grid grid--3">
+      {division.links.map((l) => (
+        <a class="card division-card" href={l.href}>
+          <h3>{l.label}</h3>
+          {l.interactive && <span class="tag">Online form</span>}
+          {l.external && <span class="tag tag--ext">External tool</span>}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .division-hero {
+    background: linear-gradient(180deg, var(--color-cream), var(--color-white));
+  }
+  .division-hero__intro {
+    font-size: 1.2rem;
+    max-width: 60ch;
+    color: var(--color-muted);
+    margin-bottom: var(--space-4);
+  }
+  .division-card { display: block; }
+  .division-card:hover { text-decoration: none; box-shadow: var(--shadow-md); }
+  .division-card h3 { margin-bottom: var(--space-2); }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-primary-dark);
+  }
+  .tag--ext { background: var(--color-sand); }
+</style>

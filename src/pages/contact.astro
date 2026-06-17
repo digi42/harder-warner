@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Cloudflare Turnstile TEST site key (always passes). Replace with the real key.
+const TURNSTILE_SITE_KEY = '1x00000000000000000000AA';
+---
+<BaseLayout title="Contact" description="Get in touch with Harder & Warner — design consultations, garden center questions, and commercial services.">
+  <section class="section">
+    <div class="container" style="max-width: 640px;">
+      <p class="eyebrow">Contact</p>
+      <h1>Let's talk</h1>
+      <p>
+        Questions about a project, a plant, or a property? Send us a note and the
+        right team will get back to you.
+      </p>
+
+      <form id="contact-form" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone <span class="muted">(optional)</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" />
+        </div>
+        <div class="field">
+          <label for="message">How can we help?</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY}></div>
+
+        <button type="submit" class="btn btn--primary" style="margin-top: 1rem;">
+          Send message
+        </button>
+        <p id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const status = document.getElementById('form-status')!;
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Sending…';
+      status.style.color = '';
+
+      const res = await fetch('/api/contact', { method: 'POST', body: new FormData(form) });
+      const data = (await res.json()) as { ok: boolean; errors?: Record<string, string> };
+
+      if (data.ok) {
+        form.reset();
+        status.style.color = 'var(--color-primary)';
+        status.textContent = 'Thanks! We received your message and will be in touch.';
+        // @ts-ignore — turnstile global from the injected script
+        window.turnstile?.reset();
+      } else {
+        status.style.color = 'var(--color-danger)';
+        status.textContent =
+          Object.values(data.errors ?? { form: 'Something went wrong.' }).join(' ');
+      }
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .muted { color: var(--color-muted); font-weight: 400; }
+  #form-status { margin-top: var(--space-2); font-weight: 600; }
+  .cf-turnstile { margin-top: var(--space-3); }
+</style>

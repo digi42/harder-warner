@@ -1,0 +1,74 @@
+---
+import { divisions, globalLinks } from '../lib/nav';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <span class="brand__mark">H&amp;W</span>
+      <p><strong>Harder &amp; Warner</strong><br />Landscape Design &amp; Garden Center</p>
+      <p class="muted">Fourth-generation family owned since 1945.<br />Caledonia, Michigan</p>
+    </div>
+
+    {divisions.map((d) => (
+      <nav class="site-footer__col" aria-label={d.label}>
+        <h4><a href={d.href}>{d.label}</a></h4>
+        <ul>
+          {d.links.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+
+    <nav class="site-footer__col" aria-label="Company">
+      <h4>Company</h4>
+      <ul>
+        {globalLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>&copy; {year} Harder &amp; Warner. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-primary-dark);
+    color: var(--color-cream);
+    padding-top: var(--space-6);
+    margin-top: var(--space-6);
+  }
+  .site-footer a { color: var(--color-cream); }
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    padding-bottom: var(--space-5);
+  }
+  .site-footer__brand .brand__mark {
+    display: inline-grid; place-items: center;
+    width: 44px; height: 44px;
+    background: var(--color-primary-light);
+    color: var(--color-white);
+    border-radius: var(--radius);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+  }
+  .site-footer .muted { color: var(--color-accent); font-size: 0.9rem; }
+  .site-footer__col h4 { color: var(--color-white); margin-bottom: var(--space-2); font-size: 1rem; }
+  .site-footer__col h4 a { color: var(--color-white); }
+  .site-footer__col ul { list-style: none; margin: 0; padding: 0; }
+  .site-footer__col li { margin-bottom: var(--space-1); }
+  .site-footer__col a { font-size: 0.92rem; opacity: 0.9; }
+  .site-footer__bottom {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-block: var(--space-3);
+    font-size: 0.85rem;
+    color: var(--color-accent);
+  }
+</style>

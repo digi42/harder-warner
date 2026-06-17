@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DivisionLanding from '../../components/DivisionLanding.astro';
+import { divisions } from '../../lib/nav';
+const division = divisions.find((d) => d.href === '/professional-services')!;
+---
+<BaseLayout title={division.label} description={division.blurb}>
+  <DivisionLanding
+    division={division}
+    intro="Dependable commercial grounds maintenance and 24/7 snow & ice management for properties across West Michigan."
+  />
+</BaseLayout>
