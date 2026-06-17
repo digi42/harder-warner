@@ -1,16 +1,17 @@
 /* =================================================================
    Harder & Warner — design tokens + base styles
-   NOTE: Brand colors below are PLACEHOLDERS approximating the
-   garden-center green identity. Replace with exact brand hex values
-   from the logo / style guide.
+   Brand colors sampled directly from the H&W logo (public/logo.png):
+   primary forest green, leaf green, and a brighter accent, with an
+   earthy brown. Tweak as needed against the official style guide.
    ================================================================= */
 
 :root {
-  /* Brand palette (placeholder — confirm against logo) */
-  --color-primary: #3a5a40;       /* forest green */
-  --color-primary-dark: #2d4632;
-  --color-primary-light: #588157;
-  --color-accent: #a3b18a;        /* sage */
+  /* Brand palette (sampled from logo) */
+  --color-primary: #275737;       /* logo forest green */
+  --color-primary-dark: #1a3a25;
+  --color-primary-light: #70a050; /* leaf green */
+  --color-accent: #90c060;        /* bright accent green */
+  --color-earth: #6b4a28;         /* earthy brown */
   --color-cream: #f4f1e9;
   --color-sand: #e7e0d0;
   --color-ink: #1f2421;
