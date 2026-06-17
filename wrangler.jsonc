@@ -28,7 +28,7 @@
     {
       "binding": "DB",
       "database_name": "harderandwarner",
-      "database_id": "REPLACE_WITH_DATABASE_ID",
+      "database_id": "a8f05df6-c4b9-492e-807c-5832cdacf461",
       "migrations_dir": "migrations"
     }
   ]
