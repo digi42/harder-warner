@@ -1,14 +1,21 @@
 # Harder & Warner
 
 Rebuild of [harderandwarner.com](https://harderandwarner.com) — a mostly-static
-[Astro](https://astro.build) site deployed to **Cloudflare Pages**, with **D1**
-for form/order data and **Cloudflare Email Sending** for notifications.
+[Astro](https://astro.build) site deployed to **Cloudflare Workers** (static
+assets + on-demand routes), with **D1** for form/order data and **Cloudflare
+Email Sending** for notifications.
+
+> Built on Workers (not Pages) per Cloudflare's guidance that new projects start
+> on Workers, where future feature investment is focused. Pages is not deprecated,
+> but the two are converging into one "projects" experience.
 
 ## Stack
 
-- **Astro 5** — default static output; interactive routes opt into SSR
-  (Pages Functions) with `export const prerender = false`.
-- **@astrojs/cloudflare** adapter → Cloudflare Pages (`_worker.js` + `_routes.json`).
+- **Astro 5** — default static output; interactive routes opt into SSR with
+  `export const prerender = false`.
+- **@astrojs/cloudflare** adapter → Cloudflare Workers + static assets. The
+  adapter emits `dist/_worker.js/`; `public/.assetsignore` keeps the Worker
+  bundle and `_routes.json` from being served as public files.
 - **D1** (`DB` binding) — orders, registrations, leads, contact submissions.
 - **Turnstile** — spam protection on public forms.
 - Clean URLs: `trailingSlash: 'never'` + `build.format: 'file'`.
@@ -46,19 +53,19 @@ wrangler d1 create harderandwarner       # paste database_id into wrangler.jsonc
 npm run db:migrate:remote                # apply schema to the remote DB
 ```
 
-## Deployment — Cloudflare Pages + GitHub
+## Deployment — Cloudflare Workers + GitHub (Workers Builds)
 
-One-time: in the Cloudflare dashboard, **Workers & Pages → Create → Pages →
-Connect to Git**, select this repo, and set:
+One-time: in the Cloudflare dashboard, **Workers & Pages → Create → Workers →
+Connect to Git** (Workers Builds), select this repo, and set:
 
 - Build command: `npm run build`
-- Build output directory: `dist`
+- Deploy command: `npx wrangler deploy`
 
-Pushing to the production branch then auto-builds and deploys; every PR gets a
-preview URL. Bindings (D1, etc.) are read from `wrangler.jsonc` on build, or set
-under the Pages project's **Settings → Functions → Bindings**.
+Pushing to the production branch then auto-builds and deploys; non-production
+branches get preview URLs. Bindings (D1, etc.) are read from `wrangler.jsonc`.
 
 Manual deploy (without Git): `npm run deploy`.
+Local preview against the built Worker: `npm run preview` (`wrangler dev`).
 
 ## TODO / open items
 

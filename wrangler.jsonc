@@ -4,9 +4,18 @@
   "compatibility_date": "2025-06-01",
   "compatibility_flags": ["nodejs_compat"],
 
-  // Cloudflare Pages target (matches @astrojs/cloudflare v12 output).
-  // Pages reads dist/_worker.js + dist/_routes.json automatically.
-  "pages_build_output_dir": "./dist",
+  // Cloudflare Workers + static assets target.
+  // The @astrojs/cloudflare adapter emits the SSR Worker into dist/_worker.js/.
+  // dist/.assetsignore (copied from public/) keeps _worker.js + _routes.json
+  // from being served as public files.
+  "main": "./dist/_worker.js/index.js",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Serve /about.html for /about, and 404s through the Worker.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  },
 
   "observability": {
     "enabled": true
@@ -14,8 +23,7 @@
 
   // --- D1: orders, registrations, leads, contact submissions ---
   // Create with: wrangler d1 create harderandwarner
-  // Then paste the returned database_id below. Pages Git builds read these
-  // bindings from this file.
+  // Then paste the returned database_id below.
   "d1_databases": [
     {
       "binding": "DB",
